@@ -3,6 +3,7 @@ import time
 from datetime import datetime
 from urllib.parse import urlparse
 from scraper.engine import FirecrawlEngine
+from janitor import run_content_audit
 
 def main():
     # 1. Get User Input
@@ -40,8 +41,12 @@ def main():
                     # Save logic
                     path = urlparse(page['metadata']['sourceURL']).path.strip("/")
                     name = path.replace("/", "_") or "index"
-                    with open(os.path.join(save_path, f"{name}.md"), "w") as f:
+                    with open(os.path.join(save_path, f"{name}.md"), "w", encoding="utf-8") as f:
                         f.write(page.get("markdown", ""))
+                
+                # --- JANITOR FUNCTIONALITY ---
+                print("\n🧹 Initializing Janitor: Content-Aware English Audit...")
+                run_content_audit(save_path)
                 break
             
             time.sleep(5)
