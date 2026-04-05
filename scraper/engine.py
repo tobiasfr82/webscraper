@@ -9,7 +9,7 @@ class FirecrawlEngine:
     def __init__(self, api_url="http://localhost:3002/v1"):
         self.api_url = api_url
 
-    def run_crawl(self, target_url, limit=100):
+    def run_crawl(self, target_url, limit=10000):
         payload = {
             "url": target_url,
             "limit": limit,
